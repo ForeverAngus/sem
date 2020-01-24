@@ -27,12 +27,6 @@ Some content | Other content
 
 
 
-
-
-
-<http://google.com>
-
-
 [google]: http://google.com
 
 <http://google.com>
