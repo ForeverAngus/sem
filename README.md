@@ -1,6 +1,8 @@
 #Software Engineering Methods
 
 - Master Build Status [![Build Status](https://travis-ci.org/ForeverAngus/sem.svg?branch=master)](https://travis-ci.org/ForeverAngus/sem)
+- Licence [![LICENSE](https://img.shields.io/github/license/ForeverAngus/sem.svg?style=flat-square)](https://github.com/ForeverAngus/sem/blob/master/LICENSE)
+- Release [![Releases](https://img.shields.io/github/release/ForeverAngus/sem/all.svg?style=flat-square)](https://github.com/ForeverAngus/sem/releases)
 
 This is a **READ ME** Document
 ==================================
