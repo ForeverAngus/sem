@@ -1,3 +1,7 @@
+#Software Engineering Methods
+
+- Master Build Status [![Build Status](https://travis-ci.org/ForeverAngus/sem.svg?branch=master)](https://travis-ci.org/ForeverAngus/sem)
+
 This is a **READ ME** Document
 ==================================
 #This is a **header** 1
