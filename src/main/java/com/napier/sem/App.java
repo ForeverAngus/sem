@@ -20,12 +20,53 @@ public class App {
         emp.title = a.getMostRecentJobTitle(emp.emp_no);
         emp.salary = a.getMostRecentSalary(emp.emp_no);
         emp.dept_name = a.getMostRecentDepartmentName(emp.emp_no);
+        emp.manager = a.getMostRecentManager(emp.emp_no);
 
         // Display results
         a.displayEmployee(emp);
 
         // Disconnect from database
         a.disconnect();
+    }
+
+    private String getMostRecentManager(int emp_no) {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT manager.emp_no, manager.first_name, manager.last_name "
+                            + "FROM employees as manager " +
+                            "LEFT JOIN dept_manager as dep_man " +
+                            "ON manager.emp_no = dep_man.emp_no " +
+                            "LEFT JOIN departments as dep " +
+                            "ON dep_man.dept_no = dep.dept_no " +
+                            "LEFT JOIN dept_emp as depemp " +
+                            "ON dep.dept_no = depemp.dept_no " +
+                            "LEFT JOIN employees as employee " +
+                            "ON depemp.emp_no = employee.emp_no "
+                            + "WHERE employee.emp_no = " + emp_no
+                            + " ORDER BY dep_man.from_date DESC LIMIT 1";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee manager if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                return rset.getInt("manager.emp_no") + " "
+                        + rset.getString("manager.first_name") + " "
+                        + rset.getString("manager.last_name");
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee manager details");
+            return null;
+        }
     }
 
     private String getMostRecentDepartmentName(int emp_no) {
@@ -40,7 +81,7 @@ public class App {
                             + "LEFT JOIN dept_emp as depemp "
                             + "ON dep.dept_no = depemp.dept_no "
                             + "WHERE depemp.emp_no = " + emp_no
-                            + " ORDER BY from_date DESC";
+                            + " ORDER BY from_date DESC LIMIT 1";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return department name if valid.
@@ -70,7 +111,7 @@ public class App {
                     "SELECT salary "
                             + "FROM salaries "
                             + "WHERE emp_no = " + emp_no
-                            + " ORDER BY from_date DESC";
+                            + " ORDER BY from_date DESC LIMIT 1";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return salary if valid.
@@ -100,7 +141,7 @@ public class App {
                     "SELECT title "
                             + "FROM titles "
                             + "WHERE emp_no = " + emp_no
-                            + " ORDER BY from_date DESC";
+                            + " ORDER BY from_date DESC LIMIT 1";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return job title if valid.
