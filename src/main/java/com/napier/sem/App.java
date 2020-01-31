@@ -17,11 +17,73 @@ public class App {
 
         // Get an employee
         Employee emp = a.getEmployee(255530);
+        emp.title = a.getMostRecentJobTitle(emp.emp_no);
+        emp.salary = a.getMostRecentSalary(emp.emp_no);
         // Display results
         a.displayEmployee(emp);
 
         // Disconnect from database
         a.disconnect();
+    }
+
+    private int getMostRecentSalary(int emp_no) {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT salary "
+                            + "FROM salaries "
+                            + "WHERE emp_no = " + emp_no
+                            + " ORDER BY from_date DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                return rset.getInt("salary");
+            }
+            else
+                return 0;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+            return 0;
+        }
+    }
+
+    private String getMostRecentJobTitle(int emp_no) {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT title "
+                            + "FROM titles "
+                            + "WHERE emp_no = " + emp_no
+                            + " ORDER BY from_date DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                return rset.getString("title");
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee job title details");
+            return null;
+        }
     }
 
     /**
