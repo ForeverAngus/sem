@@ -19,11 +19,45 @@ public class App {
         Employee emp = a.getEmployee(255530);
         emp.title = a.getMostRecentJobTitle(emp.emp_no);
         emp.salary = a.getMostRecentSalary(emp.emp_no);
+        emp.dept_name = a.getMostRecentDepartmentName(emp.emp_no);
+
         // Display results
         a.displayEmployee(emp);
 
         // Disconnect from database
         a.disconnect();
+    }
+
+    private String getMostRecentDepartmentName(int emp_no) {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT dep.dept_name, depemp.from_date "
+                            + "FROM departments as dep "
+                            + "LEFT JOIN dept_emp as depemp "
+                            + "ON dep.dept_no = depemp.dept_no "
+                            + "WHERE depemp.emp_no = " + emp_no
+                            + " ORDER BY from_date DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return department name if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                return rset.getString("dep.dept_name");
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee department details");
+            return null;
+        }
     }
 
     private int getMostRecentSalary(int emp_no) {
@@ -39,7 +73,7 @@ public class App {
                             + " ORDER BY from_date DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return salary if valid.
             // Check one is returned
             if (rset.next())
             {
@@ -51,7 +85,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
+            System.out.println("Failed to get employee salary details");
             return 0;
         }
     }
@@ -69,7 +103,7 @@ public class App {
                             + " ORDER BY from_date DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return job title if valid.
             // Check one is returned
             if (rset.next())
             {
