@@ -1,0 +1,49 @@
+@startuml
+
+actor HR1 as "HR Advisor"
+
+rectangle db1 as "Database"
+
+rectangle "HR System 1" {
+    usecase UC1 as "Get all salaries"
+
+    usecase UCa as "Print salaries"
+
+    HR1 - UC1
+    UC1 ..> UCa : include
+    UC1 - db1
+}
+
+actor HR2 as "HR Advisor"
+
+rectangle db2 as "Database"
+
+rectangle "HR System 2" {
+    usecase UC2 as "Get salaries
+    by role"
+
+    usecase UCb as "Print salaries"
+
+    HR2 - UC2
+    UC2 ..> UCb : include
+    UC2 - db2
+}
+
+actor HR4 as "HR Advisor"
+
+rectangle db4 as "Database"
+
+rectangle "HR System 4" {
+    usecase UC4 as "Get salaries
+    by role"
+
+    usecase UCd as "Print salaries"
+
+    HR4 - UC4
+    UC4 ..> UCd : include
+    UC4 - db4
+}
+
+
+
+@enduml
