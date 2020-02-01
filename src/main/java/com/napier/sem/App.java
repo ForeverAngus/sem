@@ -2,6 +2,7 @@ package com.napier.sem;
 
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class App {
@@ -25,8 +26,74 @@ public class App {
         // Display results
         a.displayEmployee(emp);
 
+        // Extract employee salary information
+        ArrayList<Employee> employees = a.getAllSalaries();
+
+        // Test the size of the returned data - should be 240124
+        System.out.println(employees.size());
+
+        // Print all Employee salaries
+        a.printSalaries(employees);
+
         // Disconnect from database
         a.disconnect();
+    }
+
+    /**
+     * Prints a list of employees.
+     * @param employees The list of employees to print.
+     */
+    public void printSalaries(ArrayList<Employee> employees)
+    {
+        // Print header
+        System.out.println(String.format("%-10s %-15s %-20s %-8s", "Emp No", "First Name", "Last Name", "Salary"));
+        // Loop over all employees in the list
+        for (Employee emp : employees)
+        {
+            String emp_string =
+                    String.format("%-10s %-15s %-20s %-8s",
+                            emp.emp_no, emp.first_name, emp.last_name, emp.salary);
+            System.out.println(emp_string);
+        }
+    }
+
+    /**
+     * Gets all the current employees and salaries.
+     * @return A list of all employees and salaries, or null if there is an error.
+     */
+    public ArrayList<Employee> getAllSalaries()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary "
+                            + "FROM employees, salaries "
+                            + "WHERE employees.emp_no = salaries.emp_no AND salaries.to_date = '9999-01-01' "
+                            + "ORDER BY employees.emp_no ASC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract employee information
+            ArrayList<Employee> employees = new ArrayList<>();
+            while (rset.next())
+            {
+                Employee emp = new Employee();
+                emp.emp_no = rset.getInt("employees.emp_no");
+                emp.first_name = rset.getString("employees.first_name");
+                emp.last_name = rset.getString("employees.last_name");
+                emp.salary = rset.getInt("salaries.salary");
+                employees.add(emp);
+            }
+            return employees;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get salary details");
+            return null;
+        }
     }
 
     private String getMostRecentManager(int emp_no) {
@@ -47,7 +114,7 @@ public class App {
                             "LEFT JOIN employees as employee " +
                             "ON depemp.emp_no = employee.emp_no "
                             + "WHERE employee.emp_no = " + emp_no
-                            + " ORDER BY dep_man.from_date DESC LIMIT 1";
+                            + " AND dep_man.to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee manager if valid.
@@ -76,12 +143,12 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT dep.dept_name, depemp.from_date "
+                    "SELECT dep.dept_name "
                             + "FROM departments as dep "
                             + "LEFT JOIN dept_emp as depemp "
                             + "ON dep.dept_no = depemp.dept_no "
                             + "WHERE depemp.emp_no = " + emp_no
-                            + " ORDER BY from_date DESC LIMIT 1";
+                            + " AND depemp.to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return department name if valid.
@@ -111,7 +178,7 @@ public class App {
                     "SELECT salary "
                             + "FROM salaries "
                             + "WHERE emp_no = " + emp_no
-                            + " ORDER BY from_date DESC LIMIT 1";
+                            + " AND to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return salary if valid.
@@ -141,7 +208,7 @@ public class App {
                     "SELECT title "
                             + "FROM titles "
                             + "WHERE emp_no = " + emp_no
-                            + " ORDER BY from_date DESC LIMIT 1";
+                            + " AND to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return job title if valid.
