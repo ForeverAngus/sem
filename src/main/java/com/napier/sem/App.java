@@ -47,7 +47,7 @@ public class App {
                             "LEFT JOIN employees as employee " +
                             "ON depemp.emp_no = employee.emp_no "
                             + "WHERE employee.emp_no = " + emp_no
-                            + " ORDER BY dep_man.from_date DESC LIMIT 1";
+                            + " AND dep_man.to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee manager if valid.
@@ -76,12 +76,12 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT dep.dept_name, depemp.from_date "
+                    "SELECT dep.dept_name "
                             + "FROM departments as dep "
                             + "LEFT JOIN dept_emp as depemp "
                             + "ON dep.dept_no = depemp.dept_no "
                             + "WHERE depemp.emp_no = " + emp_no
-                            + " ORDER BY from_date DESC LIMIT 1";
+                            + " AND depemp.to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return department name if valid.
@@ -111,7 +111,7 @@ public class App {
                     "SELECT salary "
                             + "FROM salaries "
                             + "WHERE emp_no = " + emp_no
-                            + " ORDER BY from_date DESC LIMIT 1";
+                            + " AND to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return salary if valid.
@@ -141,7 +141,7 @@ public class App {
                     "SELECT title "
                             + "FROM titles "
                             + "WHERE emp_no = " + emp_no
-                            + " ORDER BY from_date DESC LIMIT 1";
+                            + " AND to_date = '9999-01-01'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return job title if valid.
