@@ -1,9 +1,9 @@
 #Software Engineering Methods
 
-- Master Build Status [![Build Status](https://travis-ci.org/ForeverAngus/sem.svg?branch=master)](https://travis-ci.org/ForeverAngus/sem)
-- Develop Build Status [![Build Status](https://travis-ci.org/ForeverAngus/sem.svg?branch=develop)](https://travis-ci.org/ForeverAngus/sem)
-- Licence [![LICENSE](https://img.shields.io/github/license/ForeverAngus/sem.svg?style=flat-square)](https://github.com/ForeverAngus/sem/blob/master/LICENSE)
-- Release [![Releases](https://img.shields.io/github/release/ForeverAngus/sem/all.svg?style=flat-square)](https://github.com/ForeverAngus/sem/releases)
+- Master Build Status [![Build Status](https://travis-ci.org/DayleAngus/sem.svg?branch=master)](https://travis-ci.org/ForeverAngus/sem)
+- Develop Build Status [![Build Status](https://travis-ci.org/DayleAngus/sem.svg?branch=develop)](https://travis-ci.org/ForeverAngus/sem)
+- Licence [![LICENSE](https://img.shields.io/github/license/DayleAngus/sem.svg?style=flat-square)](https://github.com/ForeverAngus/sem/blob/master/LICENSE)
+- Release [![Releases](https://img.shields.io/github/release/DayleAngus/sem/all.svg?style=flat-square)](https://github.com/ForeverAngus/sem/releases)
 - Code Coverage [![codecov](https://codecov.io/gh/DayleAngus/sem/branch/master/graph/badge.svg)](https://codecov.io/gh/DayleAngus/sem)
 
 This is a **READ ME** Document
