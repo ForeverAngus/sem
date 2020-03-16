@@ -14,24 +14,7 @@ public class App {
         App a = new App();
 
         // Connect to database
-        a.connect();
-
-//        // Get an employee
-//        Employee emp = a.getEmployee(255530);
-//        emp.title = a.getMostRecentJobTitle(emp.emp_no);
-//        emp.salary = a.getMostRecentSalary(emp.emp_no);
-//        emp.dept_name = a.getMostRecentDepartmentName(emp.emp_no);
-//        emp.manager = a.getMostRecentManager(emp.emp_no);
-//        // Display results
-//        a.displayEmployee(emp);
-
-
-//        // Extract employee salary information
-////        ArrayList<Employee> employees = a.getAllSalaries();
-////        // Test the size of the returned data - should be 240124
-////        System.out.println(employees.size());
-////        // Print all Employee salaries
-////        a.printSalaries(employees);
+        a.connect("localhost:33060");
 
 
         String jobRole = "Engineer";
@@ -55,11 +38,19 @@ public class App {
      */
     public void printSalaries(ArrayList<Employee> employees)
     {
+        // Check employees is not null
+        if (employees == null)
+        {
+            System.out.println("No employees");
+            return;
+        }
         // Print header
         System.out.println(String.format("%-10s %-15s %-20s %-8s", "Emp No", "First Name", "Last Name", "Salary"));
         // Loop over all employees in the list
         for (Employee emp : employees)
         {
+            if (emp == null)
+                continue;
             String emp_string =
                     String.format("%-10s %-15s %-20s %-8s",
                             emp.emp_no, emp.first_name, emp.last_name, emp.salary);
@@ -288,12 +279,12 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
+    public void connect(String location)
     {
         try
         {
             // Load Database driver
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch (ClassNotFoundException e)
         {
@@ -310,7 +301,7 @@ public class App {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
