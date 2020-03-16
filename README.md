@@ -4,6 +4,7 @@
 - Develop Build Status [![Build Status](https://travis-ci.org/ForeverAngus/sem.svg?branch=develop)](https://travis-ci.org/ForeverAngus/sem)
 - Licence [![LICENSE](https://img.shields.io/github/license/ForeverAngus/sem.svg?style=flat-square)](https://github.com/ForeverAngus/sem/blob/master/LICENSE)
 - Release [![Releases](https://img.shields.io/github/release/ForeverAngus/sem/all.svg?style=flat-square)](https://github.com/ForeverAngus/sem/releases)
+- Code Coverage [![codecov](https://codecov.io/gh/DayleAngus/sem/branch/master/graph/badge.svg)](https://codecov.io/gh/DayleAngus/sem)
 
 This is a **READ ME** Document
 ==================================
